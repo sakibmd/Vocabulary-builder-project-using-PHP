@@ -12,6 +12,8 @@ else{
 	if('register' == $action){
 		$email = $_POST['email'] ?? "";
 		$password = $_POST['password'] ?? "";
+		$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING); 
+		$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING); 
 		if($email && $password){
 			$hash = password_hash($password, PASSWORD_BCRYPT);
 			$query = "INSERT INTO users(email,password) VALUES ('{$email}','{$hash}')";
@@ -59,8 +61,8 @@ else{
 	elseif ('addword' == $action) {
 		$word = $_REQUEST['word']?? '';
 		$meaning = $_REQUEST['meaning']?? '';
-		//$word = filter_input(INPUT_POST, 'word', FILTER_SANITIZE_STRING); 
-		//$meaning = filter_input(INPUT_POST, 'meaning', FILTER_SANITIZE_STRING); 
+		$word = filter_input(INPUT_POST, 'word', FILTER_SANITIZE_STRING); 
+		$meaning = filter_input(INPUT_POST, 'meaning', FILTER_SANITIZE_STRING); 
 		$user_id = $_SESSION['id'] ?? '';
 		if($word && $meaning && $user_id){
 			$query =  "INSERT INTO words (user_id,word,meaning) VALUES ('{$user_id}','{$word}','{$meaning}')";
